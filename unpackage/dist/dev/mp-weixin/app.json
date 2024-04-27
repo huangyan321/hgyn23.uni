@@ -1,0 +1,48 @@
+{
+  "pages": [
+    "pages/posts/index",
+    "pages/archives/index",
+    "pages/project/index",
+    "pages/about/index"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#333333",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "iconfontSrc": "static/iconfont.ttf",
+    "list": [
+      {
+        "text": "文章",
+        "pagePath": "pages/posts/index",
+        "iconPath": "static/tabbar/MaterialSymbolsArticleOutline.png",
+        "selectedIconPath": "static/tabbar/MaterialSymbolsArticle.png"
+      },
+      {
+        "text": "归档",
+        "pagePath": "pages/archives/index",
+        "iconPath": "static/tabbar/RiArchive2Line.png",
+        "selectedIconPath": "static/tabbar/RiArchive2Fill.png"
+      },
+      {
+        "text": "项目",
+        "pagePath": "pages/project/index",
+        "iconPath": "static/tabbar/RiProjectorLine.png",
+        "selectedIconPath": "static/tabbar/RiProjectorFill.png"
+      },
+      {
+        "text": "项目1",
+        "pagePath": "pages/about/index",
+        "iconPath": "static/tabbar/SimpleIconsAboutdotme.png",
+        "selectedIconPath": "static/tabbar/SimpleIconsAboutdotme.png"
+      }
+    ]
+  },
+  "usingComponents": {}
+}
