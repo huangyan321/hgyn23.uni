@@ -25,13 +25,8 @@
 	const title = ref('title')
 </script>
 
-<style scoped>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
+<style scoped lang="scss">
+	.content {}
 
 	.logo {
 		height: 200rpx;

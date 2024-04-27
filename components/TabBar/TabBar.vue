@@ -29,17 +29,18 @@
 	}
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 	.tab-bar {
 		@include flex();
 		width: 100%;
 		border-bottom: 1rpx solid #f5f5f5;
 		background-color: #fff;
+		color: #000000;
 
 		&-scroll {
 			flex: 1;
 			height: 90rpx;
-			overflow: hidden;
+			width: 100%;
 
 			&-box {
 				@include flex(flex-start);

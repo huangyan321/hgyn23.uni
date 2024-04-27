@@ -24,5 +24,5 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
   }
 });
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-e632d448"], ["__file", "C:/Users/vanweiping/Desktop/code/myproject/hbuilderx/hgyn23.mp/components/TabBar/TabBar.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "C:/Users/vanweiping/Desktop/code/myproject/hbuilderx/hgyn23.mp/components/TabBar/TabBar.vue"]]);
 wx.createComponent(Component);

@@ -3,5 +3,6 @@
   "projectname": "hgyn23.mp",
   "setting": {
     "compileHotReLoad": true
-  }
+  },
+  "libVersion": "3.4.2"
 }
