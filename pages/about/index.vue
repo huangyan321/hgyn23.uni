@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="about">
 about
 	</view>
 </template>
@@ -15,5 +15,7 @@ about
 </script>
 
 <style>
-
+.about {
+	
+}
 </style>

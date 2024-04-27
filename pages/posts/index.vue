@@ -1,5 +1,7 @@
 <template>
 	<view class="content">
+		<NavBar></NavBar>
+		<TabBar :tag-list="tagList"></TabBar>
 		<image class="logo" src="/static/logo.png"></image>
 		<view class="text-area">
 			<text class="title">{{title}}</text>
@@ -8,11 +10,22 @@
 </template>
 
 <script setup lang="ts">
-	import { ref } from 'vue'
+	import { onLoad } from '@dcloudio/uni-app'
+	import { getPosts } from '@/api';
+
+	import {
+		ref
+	} from 'vue'
+
+	const tagList = ref([])
+	onLoad(async () => {
+		const res = await getPosts()
+		tagList.value = res.data.records
+	})
 	const title = ref('title')
 </script>
 
-<style>
+<style scoped>
 	.content {
 		display: flex;
 		flex-direction: column;

@@ -1,11 +1,11 @@
 
-.content {
+.content.data-v-db5b8b6c {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 }
-.logo {
+.logo.data-v-db5b8b6c {
 		height: 200rpx;
 		width: 200rpx;
 		margin-top: 200rpx;
@@ -13,11 +13,11 @@
 		margin-right: auto;
 		margin-bottom: 50rpx;
 }
-.text-area {
+.text-area.data-v-db5b8b6c {
 		display: flex;
 		justify-content: center;
 }
-.title {
+.title.data-v-db5b8b6c {
 		font-size: 36rpx;
 		color: #8f8f94;
 }
