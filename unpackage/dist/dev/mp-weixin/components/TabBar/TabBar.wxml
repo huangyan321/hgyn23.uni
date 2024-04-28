@@ -1,1 +1,0 @@
-<view class="tab-bar"><scroll-view class="tab-bar-scroll" scroll-x="true"><view class="tab-bar-scroll-box"><view wx:for="{{a}}" wx:for-item="tag" wx:key="c" class="{{['tab-bar-scroll-item', tag.b && 'active']}}" bindtap="{{tag.d}}">{{tag.a}}</view></view></scroll-view></view>

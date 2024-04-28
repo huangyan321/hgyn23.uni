@@ -2,6 +2,6 @@
   "navigationBarTitleText": "uni-app",
   "usingComponents": {
     "nav-bar": "../../components/NavBar/NavBar",
-    "tab-bar": "../../components/TabBar/TabBar"
+    "post-page": "../../components/PostPage/PostPage"
   }
 }

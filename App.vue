@@ -8,6 +8,9 @@
 		},
 		onHide: function() {
 			console.log('App Hide')
+		},
+		onReady: function() {
+			console.log('oinReady');
 		}
 	}
 </script>

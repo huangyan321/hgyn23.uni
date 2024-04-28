@@ -1,0 +1,63 @@
+	.tab-bar {
+		@include flex(center, column);
+		width: 100%;
+		background-color: #fff;
+		color: #000000;
+		box-sizing: content-box;
+
+		&-scroll {
+			flex: 1;
+			width: 100%;
+
+			&-box {
+				@include flex(flex-start);
+				height: 90rpx;
+			}
+
+			&-item {
+				flex-shrink: 0;
+				padding: 0 20rpx;
+				font-size: 28rpx;
+				line-height: 90rpx;
+
+				&-title {
+					color: #555;
+					font-size: 15px;
+
+					&--active {
+						color: $base-color;
+					}
+				}
+
+			}
+
+			.scroll-view-indicator {
+				position: relative;
+				height: 2px;
+				background-color: transparent;
+			}
+
+			.scroll-view-underline {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				width: 0;
+				background-color: $base-color;
+				height: 2rpx;
+			}
+
+			.scroll-view-animation {
+				transition-duration: 0.2s;
+				transition-property: left, width;
+			}
+
+		}
+
+		&-line {
+			width: 100%;
+			height: 1px;
+			background-color: #f5f5f5;
+		}
+
+
+	}
