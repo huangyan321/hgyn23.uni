@@ -1,1 +1,1 @@
-<view class="">tabId: {{a}}</view>
+<view class="page-posts data-v-a92be00f"><scroll-view class="listview data-v-a92be00f" style="flex:1" enableBackToTop="true" scroll-y bindscrolltolower="{{b}}"><view wx:for="{{a}}" wx:for-item="item" wx:key="d" class="data-v-a92be00f"><post-page-item wx:if="{{item.c}}" class="data-v-a92be00f" bindclick="{{item.a}}" u-i="{{item.b}}" bind:__l="__l" u-p="{{item.c}}"></post-page-item></view></scroll-view></view>
