@@ -19,5 +19,8 @@
 	/*每个页面公共css */
 	page {
 		box-sizing: border-box;
+		display: flex;
+		width: 100%;
+		min-height: 100%;
 	}
 </style>

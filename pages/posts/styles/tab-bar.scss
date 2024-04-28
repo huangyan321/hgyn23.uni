@@ -32,23 +32,21 @@
 			}
 
 			.scroll-view-indicator {
-				position: relative;
+				width: 100%;
 				height: 2px;
 				background-color: transparent;
 			}
 
 			.scroll-view-underline {
-				position: absolute;
-				top: 0;
-				bottom: 0;
 				width: 0;
+				transform: translate(0,0,0);
 				background-color: $base-color;
 				height: 2rpx;
 			}
 
 			.scroll-view-animation {
-				transition-duration: 0.2s;
-				transition-property: left, width;
+				transition-duration: 300ms;
+				transition-property: trasform;
 			}
 
 		}

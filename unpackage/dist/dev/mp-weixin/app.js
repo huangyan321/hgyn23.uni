@@ -22,7 +22,7 @@ const _sfc_main = {
     console.log("oinReady");
   }
 };
-const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "C:/Users/16045/Desktop/code/my-project/hgyn23.uni/App.vue"]]);
+const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "C:/Users/vanweiping/Desktop/code/myproject/hbuilderx/hgyn23.mp/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
   return {

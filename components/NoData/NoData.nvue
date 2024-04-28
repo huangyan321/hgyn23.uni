@@ -1,0 +1,126 @@
+<template>
+	<view class="nodata">
+		<view class="nodata-content">
+			<view class="text-view a-i-c j-c-c t-a-c">
+				<text class="title">{{textTypes[networkType]}}</text>
+			</view>
+			<view class="icon-view"></view>
+			<view class="opera-view">
+				<view class="btn btn-default" v-if="networkType!='none'" @click="retry">
+					<text class="btn-text">重试</text>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref, onMounted } from 'vue'
+
+	const emit = defineEmits(['retry'])
+
+	const textTypes = {
+		none: "暂无网络"
+	}
+	const isConnected = false
+
+	const networkType = ref("none")
+	const isIOS = (uni.getSystemInfoSync().platform === 'ios');
+	onMounted(() => {
+		uni.onNetworkStatusChange((res) => {
+			this.isConnected = res.isConnected;
+			networkType.value = res.networkType;
+		});
+		uni.getNetworkType({
+			success: (res) => {
+				networkType.value = res.networkType;
+			}
+		});
+	})
+	function retry() {
+		emit('retry');
+	}
+	function network() {
+		let result = null;
+		const cellularData = plus.ios.newObject("CTCellularData");
+		const state = cellularData.plusGetAttribute("restrictedState");
+		if (state == 0) {
+			result = null;
+			console.log("StateUnknown");
+		} else if (state == 2) {
+			result = 1;
+			console.log("已经开启了互联网权限:NotRestricted");
+		} else if (state == 1) {
+			result = 2;
+			console.log("Restricted");
+		}
+		plus.ios.deleteObject(cellularData);
+		return result;
+	}
+</script>
+
+<style>
+	.a-i-c {
+		align-items: center;
+	}
+
+	.j-c-c {
+		justify-content: center;
+	}
+
+	.t-a-c {
+		text-align: center;
+	}
+
+	.nodata {
+		flex: 1;
+		flex-direction: column;
+		/* #ifndef APP-PLUS */
+		display: flex;
+		/* #endif */
+		align-items: center;
+		justify-content: center;
+		padding: 30px;
+		background-color: #f8f8f8;
+	}
+
+	.nodata-content {
+		transform: translateY(-50px);
+	}
+
+	.text-view {
+		margin-bottom: 40px;
+	}
+
+	.title {
+		color: #999999;
+		font-size: 18px;
+	}
+
+	.opera-view {
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.btn {
+		padding: 5px 10px;
+		width: 128px;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+	}
+
+	.btn-text {
+		color: #999999;
+		font-size: 15px;
+	}
+
+	.btn-default {
+		border-color: #999999;
+		border-style: solid;
+		border-width: 1px;
+		border-radius: 3px;
+	}
+</style>

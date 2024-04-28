@@ -2,12 +2,12 @@
 	<view class="content">
 		<NavBar></NavBar>
 		<view class="tab-bar">
-			<scroll-view class="tab-bar-scroll" :scroll-y="false" :scroll-x="true" :show-scrollbar="false"
-				:scroll-into-view="scrollInto">
+			<scroll-view class="tab-bar-scroll" :scroll="false" :scroll-x="true" :show-scrollbar="false"
+				scroll-with-animation :scroll-into-view="scrollInto">
 				<view style="flex-direction: column;">
 					<view class="tab-bar-scroll-box">
 						<view class="tab-bar-scroll-item" v-for="(tab,index) in tabList" :key="tab.id"
-							:id="'tab-'+tab.id" :ref="'tabitem'+index" :data-id=" index" :data-current="index"
+							:id="'tab-'+tab.id" :ref="'tabitem'+index" :data-id="index" :data-current="index"
 							@click="ontabtap">
 							<text class="tab-bar-scroll-item-title"
 								:class="tabIndex==index ? 'tab-bar-scroll-item-title--active' : ''">{{tab.name}}</text>
@@ -15,14 +15,16 @@
 					</view>
 					<view class="scroll-view-indicator">
 						<view ref="underline" class="scroll-view-underline" :class="isTap ? 'scroll-view-animation':''"
-							:style="{left: indicatorRect.left + 'px', width: indicatorRect.width + 'px'}"></view>
+							:style="{transform: `translateX(${indicatorRect.left}px)`, width: indicatorRect.width + 'px'}">
+						</view>
 					</view>
 				</view>
 			</scroll-view>
 			<view class="tab-bar-line"></view>
 		</view>
-		<swiper class="tab-box" ref="swiper1" :current="tabIndex" :duration="300" @change="onswiperchange"
-			@transition="onswiperscroll" @animationfinish="animationfinish" @onAnimationEnd="animationfinish">
+		<swiper class="page-box" ref="swiper1" :autoplay="false" :current="tabIndex" :duration="300"
+			@change="onswiperchange" @transition="onswiperscroll" @animationfinish="animationfinish"
+			@onAnimationEnd="animationfinish">
 			<swiper-item class="swiper-item" v-for="(tab, index) in tabList" :key="tab.id">
 				<PostPage class="page-item" :tab-id="tab.id" :ref="'page' + index" />
 			</swiper-item>
@@ -36,7 +38,7 @@
 	import { getCurrentInstance, reactive, ref } from 'vue'
 	// 缓存页签数量
 	const MAX_CACHE_PAGE = 3;
-	const MAX_CACHE_DATA = 100
+	const MAX_CACHE_DATA = 10;
 	const TAB_PRELOAD_OFFSET = 1;
 
 	const emit = defineEmits(['tabChange'])
@@ -81,7 +83,6 @@
 		switchTab(index);
 	}
 	function switchTab(index : number) {
-		console.log(tabIndex.value);
 		if (pageList[index].dataList.length === 0) {
 			loadTabData(index);
 		}
@@ -92,12 +93,11 @@
 		if (pageList[index].dataList.length > MAX_CACHE_DATA) {
 			let isExist = cacheTab.indexOf(tabIndex.value);
 			if (isExist < 0) {
-				cacheTab.push(this.tabIndex);
+				cacheTab.push(tabIndex.value);
 			}
 		}
 
 		scrollInto.value = 'tab-' + tabList.value[index].id;
-
 		// 释放 tabId
 		if (cacheTab.length > MAX_CACHE_PAGE) {
 			let cacheIndex = cacheTab[0];
@@ -110,12 +110,13 @@
 	function clearTabData(index : number) {
 		pageList[index].clear();
 	}
+
 	function loadTabData(index : number) {
 		pageList[index].loadData();
 	}
 	function selectorQuery() {
 		// #ifdef MP-WEIXIN || H5 || MP-QQ
-		uni.createSelectorQuery().in(vm.proxy).select('.tab-box').fields({
+		uni.createSelectorQuery().in(vm.proxy).select('.page-box').fields({
 			dataset: true,
 			size: true,
 		}, (res : UniApp.NodeInfo) => {
@@ -143,6 +144,7 @@
 		// #endif
 	}
 	function onswiperscroll(e : any) {
+		// TODO 优化卡顿
 		if (isTap.value) {
 			return;
 		}
@@ -254,4 +256,12 @@
 <style scoped lang="scss">
 	@import './styles/tab-bar.scss';
 	@import './styles/page.scss';
+
+
+
+	.content {
+		flex: 1;
+		@include flex(flex-start, column);
+		align-items: flex-start;
+	}
 </style>

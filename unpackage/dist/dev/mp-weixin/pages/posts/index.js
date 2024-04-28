@@ -11,7 +11,7 @@ if (!Math) {
   (_easycom_NavBar + _easycom_PostPage)();
 }
 const MAX_CACHE_PAGE = 3;
-const MAX_CACHE_DATA = 100;
+const MAX_CACHE_DATA = 10;
 const TAB_PRELOAD_OFFSET = 1;
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "index",
@@ -53,7 +53,6 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       switchTab(index);
     }
     function switchTab(index) {
-      console.log(tabIndex.value);
       if (pageList[index].dataList.length === 0) {
         loadTabData(index);
       }
@@ -63,7 +62,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       if (pageList[index].dataList.length > MAX_CACHE_DATA) {
         let isExist = cacheTab.indexOf(tabIndex.value);
         if (isExist < 0) {
-          cacheTab.push(this.tabIndex);
+          cacheTab.push(tabIndex.value);
         }
       }
       scrollInto.value = "tab-" + tabList.value[index].id;
@@ -80,7 +79,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       pageList[index].loadData();
     }
     function selectorQuery() {
-      common_vendor.index.createSelectorQuery().in(vm.proxy).select(".tab-box").fields({
+      common_vendor.index.createSelectorQuery().in(vm.proxy).select(".page-box").fields({
         dataset: true,
         size: true
       }, (res) => {
@@ -211,7 +210,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           };
         }),
         b: common_vendor.n(isTap.value ? "scroll-view-animation" : ""),
-        c: indicatorRect.left + "px",
+        c: `translateX(${indicatorRect.left}px)`,
         d: indicatorRect.width + "px",
         e: scrollInto.value,
         f: common_vendor.f(tabList.value, (tab, index, i0) => {
@@ -236,5 +235,5 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
   }
 });
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-db5b8b6c"], ["__file", "C:/Users/16045/Desktop/code/my-project/hgyn23.uni/pages/posts/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-db5b8b6c"], ["__file", "C:/Users/vanweiping/Desktop/code/myproject/hbuilderx/hgyn23.mp/pages/posts/index.vue"]]);
 wx.createPage(MiniProgramPage);
