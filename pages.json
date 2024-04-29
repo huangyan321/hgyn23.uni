@@ -1,4 +1,8 @@
 {
+	"workers": {
+		"path": "workers",
+		"isSubpackage": true
+	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
 			"path": "pages/posts/index",
@@ -60,7 +64,7 @@
 		"fontSize": "10px",
 		"iconWidth": "18px",
 		"spacing": "3px",
-		"iconfontSrc": "static/iconfont.ttf", // app tabbar 字体.ttf文件路径 app 3.4.4+
+		// "iconfontSrc": "static/iconfont.ttf", // app tabbar 字体.ttf文件路径 app 3.4.4+
 		"list": [{
 				"text": "文章",
 				"pagePath": "pages/posts/index",
@@ -87,4 +91,5 @@
 			}
 		]
 	}
+
 }

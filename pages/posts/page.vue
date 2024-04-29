@@ -2,8 +2,10 @@
 	<view class="page-posts">
 		<scroll-view class="listview" style="flex: 1;" enableBackToTop="true" scroll-y @scrolltolower="loadMore()">
 			<view v-for="(item , index) in dataList" :key="item.id">
-				<PostPageItem :post-item="item" @click="goDetail(item)"></PostPageItem>
+				<PostPageItem :post-item="item" @click="goDetail(item)">
+				</PostPageItem>
 			</view>
+
 			<view class="loading-more" v-if="isLoading || dataList.length > 4">
 				<text class="loading-more-text">{{loadingText}}</text>
 			</view>
@@ -13,17 +15,21 @@
 </template>
 
 <script setup lang="ts">
-	import { reactive, ref } from 'vue'
+	import { reactive, ref, getCurrentInstance, watch } from 'vue'
 	import NoData from '@/components/NoData/NoData.nvue'
 	import PostPageItem from './page-item.vue'
 	interface IProps {
 		tabId : number
 	}
 	defineProps<IProps>()
-
+	const vm = getCurrentInstance();
 	// 数据处理
 	const isNoData = ref(false)
 	const dataList = ref([])
+	watch(dataList, () => {
+		console.log('watch dataList');
+		console.log(dataList);
+	})
 	const requestParams = reactive({
 		id: 0
 	})
@@ -31,7 +37,7 @@
 		console.log('loadData');
 		setTimeout(() => {
 			isLoading.value = true
-			dataList.value = [
+			const list = [
 				{
 					"created_at": "2024-03-27 22:29:07",
 					"updated_at": "2024-04-15 23:02:18",
@@ -231,9 +237,21 @@
 					}
 				}
 			]
-		}, 800)
+			handleData(list)
+		}, 2000)
 
 	}
+	const worker = (vm.proxy as any).store.worker
+	function handleData(dataList : any) {
+		worker.postMessage({
+			cmd: 'renderlist2md',
+			data: dataList
+		})
+	}
+	worker.onMessage(function (result : any) {
+		console.log('[AppService] onWorkerMessage', result)
+		dataList.value = result
+	})
 	function clearData() {
 		dataList.value.length = 0;
 		requestParams.id = 0;

@@ -19,7 +19,6 @@
     "selectedColor": "#333333",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
-    "iconfontSrc": "static/iconfont.ttf",
     "list": [
       {
         "text": "文章",
@@ -46,6 +45,10 @@
         "selectedIconPath": "static/tabbar/SimpleIconsAboutdotme.png"
       }
     ]
+  },
+  "workers": {
+    "path": "workers",
+    "isSubpackage": true
   },
   "usingComponents": {}
 }

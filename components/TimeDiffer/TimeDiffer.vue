@@ -20,8 +20,9 @@
 	onBeforeMount(() => {
 		watchEffect(() => {
 			timer = setInterval(() => {
+				console.log(props.date);
 				relative.value = relativeTimeFromNow(props.date);
-			}, 1000);
+			}, 60000);
 			if (Math.abs(dayjs(props.date).diff(new Date(), 'd')) > displayAbsoluteTimeAfterDay) {
 				clearInterval(timer);
 				// @ts-expect-error

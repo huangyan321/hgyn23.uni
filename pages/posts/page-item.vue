@@ -7,8 +7,7 @@
 			</view>
 			<view class="main-row">
 				<view class="main-box">
-					<view class="abstract">
-						{{postItem.description}}
+					<view class="abstract" v-html="postItem.description">
 					</view>
 					<image v-if="postItem.img_cover" class="cover" :fade-show="false" :src="postItem.img_cover"
 						mode="aspectFill"></image>
@@ -17,11 +16,11 @@
 					<view class="date">
 						<uni-icons fontFamily="iconfont">{{'&#xe712;'}}</uni-icons>
 						<view v-if="!!postItem.updated_at">
-							<TimeDiffer class="ml" :date="postItem.updated_at" />
+							<TimeDiffer class="ml" :date="postItem.updated_at.replaceAll('-', '/')" />
 							<text>（已编辑）</text>
 						</view>
 						<view v-else>
-							<TimeDiffer class="ml" :date="postItem.created_at" />
+							<TimeDiffer class="ml" :date="postItem.created_at.replaceAll('-', '/')" />
 						</view>
 					</view>
 
@@ -41,6 +40,7 @@
 		postItem : any
 	}
 	defineProps<IProps>()
+
 	const emit = defineEmits(['click'])
 	function click() {
 		emit('click')

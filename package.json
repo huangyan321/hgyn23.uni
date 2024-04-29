@@ -2,7 +2,7 @@
   "name": "hgyn23.uni",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,6 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dayjs": "^1.11.11"
+    "dayjs": "^1.11.11",
+    "markdown-it": "^14.1.0"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^14.0.1",
+    "markdown-it-shikiji": "^0.10.2"
   }
 }
