@@ -1,7 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "no-data": "../NoData/NoData",
-    "post-page-item": "./PostPageItem"
-  }
-}

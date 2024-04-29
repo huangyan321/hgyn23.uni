@@ -1,15 +1,10 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-if (!Array) {
-  const _easycom_NavBar2 = common_vendor.resolveComponent("NavBar");
-  const _easycom_PostPage2 = common_vendor.resolveComponent("PostPage");
-  (_easycom_NavBar2 + _easycom_PostPage2)();
-}
-const _easycom_NavBar = () => "../../components/NavBar/NavBar.js";
-const _easycom_PostPage = () => "../../components/PostPage/PostPage.js";
 if (!Math) {
-  (_easycom_NavBar + _easycom_PostPage)();
+  (NavBar + PostPage)();
 }
+const PostPage = () => "./page.js";
+const NavBar = () => "./nav-bar.js";
 const MAX_CACHE_PAGE = 3;
 const MAX_CACHE_DATA = 10;
 const TAB_PRELOAD_OFFSET = 1;
@@ -235,5 +230,5 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
   }
 });
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-db5b8b6c"], ["__file", "C:/Users/vanweiping/Desktop/code/myproject/hbuilderx/hgyn23.mp/pages/posts/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-db5b8b6c"], ["__file", "C:/Users/16045/Desktop/code/my-project/hgyn23.uni/pages/posts/index.vue"]]);
 wx.createPage(MiniProgramPage);

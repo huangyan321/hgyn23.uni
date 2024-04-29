@@ -35,6 +35,8 @@
 <script setup lang="ts">
 	import { onReady, onLoad } from '@dcloudio/uni-app'
 	import { getPosts } from '@/api';
+	import PostPage from './page.vue'
+	import NavBar from './nav-bar.vue'
 	import { getCurrentInstance, reactive, ref } from 'vue'
 	// 缓存页签数量
 	const MAX_CACHE_PAGE = 3;

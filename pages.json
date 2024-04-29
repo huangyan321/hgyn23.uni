@@ -4,7 +4,14 @@
 			"path": "pages/posts/index",
 
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "文章"
+			}
+		},
+		{
+			"path": "pages/posts/detail/index",
+
+			"style": {
+				"navigationBarTitleText": "详情"
 			}
 		},
 		{

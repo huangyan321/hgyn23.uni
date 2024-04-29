@@ -1,7 +1,7 @@
 {
-  "navigationBarTitleText": "uni-app",
+  "navigationBarTitleText": "文章",
   "usingComponents": {
-    "nav-bar": "../../components/NavBar/NavBar",
-    "post-page": "../../components/PostPage/PostPage"
+    "post-page": "./page",
+    "nav-bar": "./nav-bar"
   }
 }

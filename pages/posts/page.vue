@@ -15,7 +15,7 @@
 <script setup lang="ts">
 	import { reactive, ref } from 'vue'
 	import NoData from '@/components/NoData/NoData.nvue'
-	import PostPageItem from './PostPageItem.vue'
+	import PostPageItem from './page-item.vue'
 	interface IProps {
 		tabId : number
 	}
@@ -240,7 +240,11 @@
 	}
 	// 处理页面跳转
 
-	function goDetail(item : any) {
+	function goDetail(detail : any) {
+		console.log(detail);
+		uni.navigateTo({
+			url: './detail/index?query=' + encodeURIComponent(JSON.stringify(detail))
+		});
 
 	}
 	// 处理上拉加载
