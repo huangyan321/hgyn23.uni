@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 	import { onLoad } from '@dcloudio/uni-app'
-	import { ref } from 'vue';
+	import { ref, nextTick } from 'vue';
 	import { getPost } from '@/api';
 	import marked from '@/utils/marked'
 	interface IProps {
@@ -29,8 +29,16 @@
 		getDetail();
 	}
 	async function getDetail() {
+		uni.showToast({
+			icon: 'loading',
+			title: '获取中...',
+			mask: true
+		})
 		const res = await getPost(banner.value.id)
 		dataDetail.value = res.data.content
+		nextTick(() => {
+			uni.hideToast()
+		})
 	}
 	onLoad((event) => {
 		// 目前在某些平台参数会被主动 decode，暂时这样处理。
@@ -42,6 +50,9 @@
 <style scoped lang="scss">
 	.post-detail {
 		width: 100%;
-		font-size: 32rpx;
+		font-size: 30rpx;
+		padding: 30rpx;
+		box-sizing: border-box;
+		letter-spacing: initial !important;
 	}
 </style>

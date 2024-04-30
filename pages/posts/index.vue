@@ -13,13 +13,13 @@
 								:class="tabIndex==index ? 'tab-bar-scroll-item-title--active' : ''">{{tab.name}}</text>
 						</view>
 					</view>
-						<view class="scroll-view-indicator">
-						<view ref="underline" class="scroll-view-underline" :class="isTap ? 'scroll-view-animation':''"
-							:style="{transform: `translateX(${indicatorRect.left}px)`, width: indicatorRect.width + 'px'}">
-						</view>
-					</view>
 				</view>
 			</scroll-view>
+			<view class="scroll-view-indicator">
+				<view ref="underline" class="scroll-view-underline" :class="isTap ? 'scroll-view-animation':''"
+					:style="{transform: `translateX(${indicatorRect.left}px)`, width: indicatorRect.width + 'px'}">
+				</view>
+			</view>
 			<view class="tab-bar-line"></view>
 		</view>
 		<swiper class="page-box" ref="swiper1" :autoplay="false" :current="tabIndex" :duration="300"
@@ -35,9 +35,10 @@
 <script setup lang="ts">
 	import { onReady, onLoad } from '@dcloudio/uni-app'
 	import { getPosts } from '@/api';
+	import { getMock } from '@/utils/mock';
 	import PostPage from './page.vue'
 	import NavBar from './nav-bar.vue'
-	import { getCurrentInstance, reactive, ref } from 'vue'
+	import { getCurrentInstance, reactive, ref, nextTick } from 'vue'
 	// 缓存页签数量
 	const MAX_CACHE_PAGE = 2;
 	const MAX_CACHE_DATA = 5;
@@ -61,17 +62,27 @@
 	})
 
 	const pageList = [];
-	onReady(function () {
-		for (var i = 0; i < tabList.value.length; i++) {
-			let item = vm.proxy.$refs['page' + i]
-			if (Array.isArray(item)) {
-				pageList.push(item[0])
-			} else {
-				pageList.push(item)
+	onReady(async function () {
+		uni.showToast({
+			icon: 'loading',
+			title: '请稍后...',
+			mask: true
+		})
+		const res = await getMock('category')
+		tabList.value = res.data.records
+		nextTick(() => {
+			uni.hideToast()
+			for (var i = 0; i < tabList.value.length; i++) {
+				let item = vm.proxy.$refs['page' + i]
+				if (Array.isArray(item)) {
+					pageList.push(item[0])
+				} else {
+					pageList.push(item)
+				}
 			}
-		}
-		switchTab(tabIndex.value);
-		selectorQuery();
+			switchTab(tabIndex.value);
+			selectorQuery();
+		})
 	})
 
 	function ontabtap(e : any) {
@@ -163,17 +174,17 @@
 		if (prevIndex === _lastTabIndex || prevIndex < 0 || prevIndex > pageList.length - 1) {
 			return;
 		}
-		// // #ifdef H5 || MP-WEIXIN
-		// // 处理tabbar索引进度条与swiper协同
-		// var percentage = Math.abs(swiperWidth / offsetX);
-		// var currentSize = tabListSize[_lastTabIndex];
-		// var prevSize = tabListSize[prevIndex];
-		// var lineL = currentSize.left + (prevSize.left - currentSize.left) / percentage;
-		// var lineW = currentSize.width + (prevSize.width - currentSize.width) / percentage;
-		// // console.log(lineL);
-		// // console.log(lineW);
-		// updateIndicator(lineL, lineW);
-		// // #endif
+		// #ifdef H5 || MP-WEIXIN
+		// 处理tabbar索引进度条与swiper协同
+		var percentage = Math.abs(swiperWidth / offsetX);
+		var currentSize = tabListSize[_lastTabIndex];
+		var prevSize = tabListSize[prevIndex];
+		var lineL = currentSize.left + (prevSize.left - currentSize.left) / percentage;
+		var lineW = currentSize.width + (prevSize.width - currentSize.width) / percentage;
+		// console.log(lineL);
+		// console.log(lineW);
+		updateIndicator(lineL, lineW);
+		// #endif
 	}
 	function animationfinish(e : any) {
 		let index = e.detail.current;
@@ -185,76 +196,6 @@
 		switchTab(index);
 		updateIndicator(tabListSize[index].left, tabListSize[index].width);
 	}
-	onLoad(async () => {
-		// const res = await getPosts()
-		// tabList.value = res.data.records
-		// console.log(res.data.records);
-		tabList.value = [
-			{
-				"created_at": "2024-04-15 22:44:38",
-				"updated_at": "2024-04-15 22:44:38",
-				"id": 16,
-				"name": "低代码",
-				"sort": 1
-			},
-			{
-				"created_at": "2024-03-04 14:35:58",
-				"updated_at": "2024-03-04 14:35:58",
-				"id": 15,
-				"name": "浏览器",
-				"sort": 1
-			},
-			{
-				"created_at": "2023-11-18 01:18:59",
-				"updated_at": "2023-11-18 01:18:59",
-				"id": 14,
-				"name": "编译器",
-				"sort": 1
-			},
-			{
-				"created_at": "2023-10-19 21:16:51",
-				"updated_at": "2023-10-19 21:16:51",
-				"id": 13,
-				"name": "路线",
-				"sort": 1
-			},
-			{
-				"created_at": "2023-10-19 20:34:55",
-				"updated_at": "2023-10-19 20:34:55",
-				"id": 12,
-				"name": "Git",
-				"sort": 1
-			},
-			{
-				"created_at": "2023-10-19 20:32:14",
-				"updated_at": "2023-10-19 20:32:14",
-				"id": 111,
-				"name": "算法",
-				"sort": 1
-			},
-			{
-				"created_at": "2023-10-19 20:32:14",
-				"updated_at": "2023-10-19 20:32:14",
-				"id": 112,
-				"name": "测试数据1",
-				"sort": 1
-			},
-			{
-				"created_at": "2023-10-19 20:32:14",
-				"updated_at": "2023-10-19 20:32:14",
-				"id": 113,
-				"name": "测试数据2",
-				"sort": 1
-			},
-			{
-				"created_at": "2023-10-19 20:32:14",
-				"updated_at": "2023-10-19 20:32:14",
-				"id": 114,
-				"name": "测试数据3",
-				"sort": 1
-			}
-		]
-	})
 </script>
 
 <style scoped lang="scss">

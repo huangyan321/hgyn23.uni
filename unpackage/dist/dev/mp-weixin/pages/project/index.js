@@ -2,6 +2,8 @@
 const common_vendor = require("../../common/vendor.js");
 const utils_mock_index = require("../../utils/mock/index.js");
 require("../../utils/mock/archives.js");
+require("../../utils/mock/postlist.js");
+require("../../utils/mock/category.js");
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "index",
   setup(__props) {

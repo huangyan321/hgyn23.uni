@@ -1,1 +1,1 @@
-<zero-markdown-view wx:if="{{a}}" class="data-v-415a4f9d" u-i="415a4f9d-0" bind:__l="__l" u-p="{{a}}"></zero-markdown-view>
+<view class="about data-v-415a4f9d"><zero-markdown-view wx:if="{{a}}" class="data-v-415a4f9d" u-i="415a4f9d-0" bind:__l="__l" u-p="{{a}}"></zero-markdown-view></view>

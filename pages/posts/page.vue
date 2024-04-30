@@ -1,6 +1,8 @@
 <template>
 	<view class="page-posts">
+
 		<scroll-view class="listview" style="flex: 1;" enableBackToTop="true" scroll-y @scrolltolower="loadMore()">
+
 			<view v-for="(item , index) in dataList" :key="item.id">
 				<PostPageItem :post-item="item" @click="goDetail(item)">
 				</PostPageItem>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 	import { getMock, MockKeys } from '@/utils/mock';
 	import { parseDate } from '@/utils/format/date';
-	import { onLoad } from '@dcloudio/uni-app'
+	import { onLoad, onShow, onHide } from '@dcloudio/uni-app'
 	import { ref } from 'vue'
 	type PostList = MockKeys['archives']['data']['records']
 	type Post = PostList[number]
@@ -26,10 +26,21 @@
 	const dataList = ref<PostList>([])
 	async function load() {
 		const res = await getMock('archives')
-
 		dataList.value = res.data.records
 	}
-	onLoad(load)
+	onLoad(async () => {
+		uni.showToast({
+			icon: 'loading',
+			title: '请稍后...',
+			mask: true
+		})
+		await load()
+		uni.hideToast()
+	})
+	onShow(load)
+	onHide(() => {
+		// dataList.value = []
+	})
 </script>
 <template>
 	<view class="archives list-scroll">
@@ -63,7 +74,6 @@
 	.archives {
 		position: relative;
 		color: #000;
-
 		.no-data {
 			opacity: 0.5;
 			padding: 8rpx 0;

@@ -1,5 +1,9 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const utils_mock_index = require("../../utils/mock/index.js");
+require("../../utils/mock/archives.js");
+require("../../utils/mock/postlist.js");
+require("../../utils/mock/category.js");
 if (!Math) {
   (NavBar + PostPage)();
 }
@@ -18,6 +22,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const tabIndex = common_vendor.ref(0);
     const scrollInto = common_vendor.ref("");
     const cacheTab = [];
+    let swiperWidth = 0;
     let _touchTabIndex = 0;
     let _lastTabIndex = 0;
     const tabListSize = {};
@@ -26,17 +31,27 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       width: 0
     });
     const pageList = [];
-    common_vendor.onReady(function() {
-      for (var i = 0; i < tabList.value.length; i++) {
-        let item = vm.proxy.$refs["page" + i];
-        if (Array.isArray(item)) {
-          pageList.push(item[0]);
-        } else {
-          pageList.push(item);
+    common_vendor.onReady(async function() {
+      common_vendor.index.showToast({
+        icon: "loading",
+        title: "请稍后...",
+        mask: true
+      });
+      const res = await utils_mock_index.getMock("category");
+      tabList.value = res.data.records;
+      common_vendor.nextTick$1(() => {
+        common_vendor.index.hideToast();
+        for (var i = 0; i < tabList.value.length; i++) {
+          let item = vm.proxy.$refs["page" + i];
+          if (Array.isArray(item)) {
+            pageList.push(item[0]);
+          } else {
+            pageList.push(item);
+          }
         }
-      }
-      switchTab(tabIndex.value);
-      selectorQuery();
+        switchTab(tabIndex.value);
+        selectorQuery();
+      });
     });
     function ontabtap(e) {
       let index = e.target.dataset.current || e.currentTarget.dataset.current;
@@ -79,7 +94,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         dataset: true,
         size: true
       }, (res) => {
-        res.width;
+        swiperWidth = res.width;
       }).exec();
       common_vendor.index.createSelectorQuery().in(vm.proxy).selectAll(".tab-bar-scroll-item").boundingClientRect((rects) => {
         rects.forEach((rect) => {
@@ -108,6 +123,12 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       if (prevIndex === _lastTabIndex || prevIndex < 0 || prevIndex > pageList.length - 1) {
         return;
       }
+      var percentage = Math.abs(swiperWidth / offsetX);
+      var currentSize = tabListSize[_lastTabIndex];
+      var prevSize = tabListSize[prevIndex];
+      var lineL = currentSize.left + (prevSize.left - currentSize.left) / percentage;
+      var lineW = currentSize.width + (prevSize.width - currentSize.width) / percentage;
+      updateIndicator(lineL, lineW);
     }
     function animationfinish(e) {
       let index = e.detail.current;
@@ -119,73 +140,6 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       switchTab(index);
       updateIndicator(tabListSize[index].left, tabListSize[index].width);
     }
-    common_vendor.onLoad(async () => {
-      tabList.value = [
-        {
-          "created_at": "2024-04-15 22:44:38",
-          "updated_at": "2024-04-15 22:44:38",
-          "id": 16,
-          "name": "低代码",
-          "sort": 1
-        },
-        {
-          "created_at": "2024-03-04 14:35:58",
-          "updated_at": "2024-03-04 14:35:58",
-          "id": 15,
-          "name": "浏览器",
-          "sort": 1
-        },
-        {
-          "created_at": "2023-11-18 01:18:59",
-          "updated_at": "2023-11-18 01:18:59",
-          "id": 14,
-          "name": "编译器",
-          "sort": 1
-        },
-        {
-          "created_at": "2023-10-19 21:16:51",
-          "updated_at": "2023-10-19 21:16:51",
-          "id": 13,
-          "name": "路线",
-          "sort": 1
-        },
-        {
-          "created_at": "2023-10-19 20:34:55",
-          "updated_at": "2023-10-19 20:34:55",
-          "id": 12,
-          "name": "Git",
-          "sort": 1
-        },
-        {
-          "created_at": "2023-10-19 20:32:14",
-          "updated_at": "2023-10-19 20:32:14",
-          "id": 111,
-          "name": "算法",
-          "sort": 1
-        },
-        {
-          "created_at": "2023-10-19 20:32:14",
-          "updated_at": "2023-10-19 20:32:14",
-          "id": 112,
-          "name": "测试数据1",
-          "sort": 1
-        },
-        {
-          "created_at": "2023-10-19 20:32:14",
-          "updated_at": "2023-10-19 20:32:14",
-          "id": 113,
-          "name": "测试数据2",
-          "sort": 1
-        },
-        {
-          "created_at": "2023-10-19 20:32:14",
-          "updated_at": "2023-10-19 20:32:14",
-          "id": 114,
-          "name": "测试数据3",
-          "sort": 1
-        }
-      ];
-    });
     return (_ctx, _cache) => {
       return {
         a: common_vendor.f(tabList.value, (tab, index, i0) => {
@@ -200,10 +154,10 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             h: common_vendor.o(ontabtap, tab.id)
           };
         }),
-        b: common_vendor.n(isTap.value ? "scroll-view-animation" : ""),
-        c: `translateX(${indicatorRect.left}px)`,
-        d: indicatorRect.width + "px",
-        e: scrollInto.value,
+        b: scrollInto.value,
+        c: common_vendor.n(isTap.value ? "scroll-view-animation" : ""),
+        d: `translateX(${indicatorRect.left}px)`,
+        e: indicatorRect.width + "px",
         f: common_vendor.f(tabList.value, (tab, index, i0) => {
           return {
             a: common_vendor.sr("page" + index, "db5b8b6c-1-" + i0, {

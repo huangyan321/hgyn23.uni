@@ -26,3 +26,6 @@
 h2.data-v-415a4f9d {
   color: red;
 }
+.about.data-v-415a4f9d {
+  padding: 30rpx;
+}

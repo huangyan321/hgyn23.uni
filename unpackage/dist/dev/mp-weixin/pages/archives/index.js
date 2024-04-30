@@ -3,6 +3,8 @@ const common_vendor = require("../../common/vendor.js");
 const utils_mock_index = require("../../utils/mock/index.js");
 const utils_format_date = require("../../utils/format/date.js");
 require("../../utils/mock/archives.js");
+require("../../utils/mock/postlist.js");
+require("../../utils/mock/category.js");
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "index",
   setup(__props) {
@@ -29,7 +31,18 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       const res = await utils_mock_index.getMock("archives");
       dataList.value = res.data.records;
     }
-    common_vendor.onLoad(load);
+    common_vendor.onLoad(async () => {
+      common_vendor.index.showToast({
+        icon: "loading",
+        title: "请稍后...",
+        mask: true
+      });
+      await load();
+      common_vendor.index.hideToast();
+    });
+    common_vendor.onShow(load);
+    common_vendor.onHide(() => {
+    });
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: !dataList.value.length
