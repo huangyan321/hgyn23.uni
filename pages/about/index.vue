@@ -1,21 +1,11 @@
 <template>
-	<view class="about">
-about
-	</view>
+	<zero-markdown-view themeColor="#222" :markdown="about"></zero-markdown-view>
 </template>
 
-<script lang="ts">
-	export default {
-		data() {
-			return {
-				
-			};
-		}
-	}
+<script lang="ts" setup>
+	import about from './about.md?raw'
 </script>
 
-<style>
-.about {
-	
-}
+<style lang="scss" scoped>
+	.about {}
 </style>

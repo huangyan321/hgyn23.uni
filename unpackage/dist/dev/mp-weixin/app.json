@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/archives/index",
     "pages/posts/index",
     "pages/posts/detail/index",
-    "pages/archives/index",
     "pages/project/index",
     "pages/about/index",
     "pages/search/index"
@@ -11,8 +11,7 @@
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8",
-    "navigationStyle": "custom"
+    "backgroundColor": "#F8F8F8"
   },
   "tabBar": {
     "color": "#7A7E83",
@@ -45,10 +44,6 @@
         "selectedIconPath": "static/tabbar/SimpleIconsAboutdotme.png"
       }
     ]
-  },
-  "workers": {
-    "path": "workers",
-    "isSubpackage": true
   },
   "usingComponents": {}
 }

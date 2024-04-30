@@ -13,7 +13,7 @@
 								:class="tabIndex==index ? 'tab-bar-scroll-item-title--active' : ''">{{tab.name}}</text>
 						</view>
 					</view>
-					<view class="scroll-view-indicator">
+						<view class="scroll-view-indicator">
 						<view ref="underline" class="scroll-view-underline" :class="isTap ? 'scroll-view-animation':''"
 							:style="{transform: `translateX(${indicatorRect.left}px)`, width: indicatorRect.width + 'px'}">
 						</view>
@@ -39,8 +39,8 @@
 	import NavBar from './nav-bar.vue'
 	import { getCurrentInstance, reactive, ref } from 'vue'
 	// 缓存页签数量
-	const MAX_CACHE_PAGE = 3;
-	const MAX_CACHE_DATA = 10;
+	const MAX_CACHE_PAGE = 2;
+	const MAX_CACHE_DATA = 5;
 	const TAB_PRELOAD_OFFSET = 1;
 
 	const emit = defineEmits(['tabChange'])
@@ -85,13 +85,14 @@
 		switchTab(index);
 	}
 	function switchTab(index : number) {
+		console.log(pageList);
 		if (pageList[index].dataList.length === 0) {
 			loadTabData(index);
 		}
-		// 发出事件，让父元素更新对应index下的page
 		if (index === tabIndex.value) return
 		tabIndex.value = index;
 		// 缓存 tabId
+		console.log('pageList[index].dataList.length', pageList[index].dataList.length);
 		if (pageList[index].dataList.length > MAX_CACHE_DATA) {
 			let isExist = cacheTab.indexOf(tabIndex.value);
 			if (isExist < 0) {
@@ -101,10 +102,10 @@
 
 		scrollInto.value = 'tab-' + tabList.value[index].id;
 		// 释放 tabId
+		console.log('cacheTab', cacheTab);
 		if (cacheTab.length > MAX_CACHE_PAGE) {
-			let cacheIndex = cacheTab[0];
+			let cacheIndex = cacheTab.shift();
 			clearTabData(cacheIndex);
-			cacheTab.splice(0, 1);
 		}
 
 	}
@@ -113,8 +114,8 @@
 		pageList[index].clear();
 	}
 
-	function loadTabData(index : number) {
-		pageList[index].loadData();
+	async function loadTabData(index : number) {
+		await pageList[index].loadData();
 	}
 	function selectorQuery() {
 		// #ifdef MP-WEIXIN || H5 || MP-QQ
@@ -162,23 +163,24 @@
 		if (prevIndex === _lastTabIndex || prevIndex < 0 || prevIndex > pageList.length - 1) {
 			return;
 		}
-		// #ifdef H5 || MP-WEIXIN
-		// 处理tabbar索引进度条与swiper协同
-		var percentage = Math.abs(swiperWidth / offsetX);
-		var currentSize = tabListSize[_lastTabIndex];
-		var prevSize = tabListSize[prevIndex];
-		var lineL = currentSize.left + (prevSize.left - currentSize.left) / percentage;
-		var lineW = currentSize.width + (prevSize.width - currentSize.width) / percentage;
-		// console.log(lineL);
-		// console.log(lineW);
-		updateIndicator(lineL, lineW);
-		// #endif
+		// // #ifdef H5 || MP-WEIXIN
+		// // 处理tabbar索引进度条与swiper协同
+		// var percentage = Math.abs(swiperWidth / offsetX);
+		// var currentSize = tabListSize[_lastTabIndex];
+		// var prevSize = tabListSize[prevIndex];
+		// var lineL = currentSize.left + (prevSize.left - currentSize.left) / percentage;
+		// var lineW = currentSize.width + (prevSize.width - currentSize.width) / percentage;
+		// // console.log(lineL);
+		// // console.log(lineW);
+		// updateIndicator(lineL, lineW);
+		// // #endif
 	}
 	function animationfinish(e : any) {
 		let index = e.detail.current;
 		if (_touchTabIndex === index) {
 			isTap.value = false;
 		}
+		console.log(index);
 		_lastTabIndex = index;
 		switchTab(index);
 		updateIndicator(tabListSize[index].left, tabListSize[index].width);

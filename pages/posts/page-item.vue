@@ -7,7 +7,8 @@
 			</view>
 			<view class="main-row">
 				<view class="main-box">
-					<view class="abstract" v-html="postItem.description">
+					<view class="abstract">
+						{{postItem.description}}
 					</view>
 					<image v-if="postItem.img_cover" class="cover" :fade-show="false" :src="postItem.img_cover"
 						mode="aspectFill"></image>

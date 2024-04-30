@@ -1,48 +1,46 @@
 {
-	"workers": {
-		"path": "workers",
-		"isSubpackage": true
-	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/archives/index",
+			"style": {
+				"navigationBarTitleText": "归档",
+				"enablePullDownRefresh": false
+			}
+		},
 		{
 			"path": "pages/posts/index",
 
 			"style": {
-				"navigationBarTitleText": "文章"
+				"navigationBarTitleText": "文章",
+				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "pages/posts/detail/index",
 
 			"style": {
-				"navigationBarTitleText": "详情"
+				"navigationBarTitleText": ""
 			}
 		},
-		{
-			"path": "pages/archives/index",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-		},
+
 		{
 			"path": "pages/project/index",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "项目",
 				"enablePullDownRefresh": false
 			}
 		},
 		{
 			"path": "pages/about/index",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "关于",
 				"enablePullDownRefresh": false
 			}
 		},
 		{
 			"path": "pages/search/index",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "搜索",
 				"enablePullDownRefresh": false
 			}
 		}
@@ -51,8 +49,7 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8",
-		"navigationStyle": "custom"
+		"backgroundColor": "#F8F8F8"
 	},
 	"uniIdRouter": {},
 	"tabBar": {

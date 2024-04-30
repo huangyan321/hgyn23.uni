@@ -1,1 +1,1 @@
-<view></view>
+<view class="project list-scroll data-v-47879d53"><view wx:if="{{a}}" class="no-data data-v-47879d53"><text class="data-v-47879d53">{ nothing here yet }</text></view></view>

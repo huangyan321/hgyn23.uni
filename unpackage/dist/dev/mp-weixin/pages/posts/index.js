@@ -5,8 +5,8 @@ if (!Math) {
 }
 const PostPage = () => "./page.js";
 const NavBar = () => "./nav-bar.js";
-const MAX_CACHE_PAGE = 3;
-const MAX_CACHE_DATA = 10;
+const MAX_CACHE_PAGE = 2;
+const MAX_CACHE_DATA = 5;
 const TAB_PRELOAD_OFFSET = 1;
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "index",
@@ -18,7 +18,6 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const tabIndex = common_vendor.ref(0);
     const scrollInto = common_vendor.ref("");
     const cacheTab = [];
-    let swiperWidth = 0;
     let _touchTabIndex = 0;
     let _lastTabIndex = 0;
     const tabListSize = {};
@@ -48,12 +47,14 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       switchTab(index);
     }
     function switchTab(index) {
+      console.log(pageList);
       if (pageList[index].dataList.length === 0) {
         loadTabData(index);
       }
       if (index === tabIndex.value)
         return;
       tabIndex.value = index;
+      console.log("pageList[index].dataList.length", pageList[index].dataList.length);
       if (pageList[index].dataList.length > MAX_CACHE_DATA) {
         let isExist = cacheTab.indexOf(tabIndex.value);
         if (isExist < 0) {
@@ -61,24 +62,24 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         }
       }
       scrollInto.value = "tab-" + tabList.value[index].id;
+      console.log("cacheTab", cacheTab);
       if (cacheTab.length > MAX_CACHE_PAGE) {
-        let cacheIndex = cacheTab[0];
+        let cacheIndex = cacheTab.shift();
         clearTabData(cacheIndex);
-        cacheTab.splice(0, 1);
       }
     }
     function clearTabData(index) {
       pageList[index].clear();
     }
-    function loadTabData(index) {
-      pageList[index].loadData();
+    async function loadTabData(index) {
+      await pageList[index].loadData();
     }
     function selectorQuery() {
       common_vendor.index.createSelectorQuery().in(vm.proxy).select(".page-box").fields({
         dataset: true,
         size: true
       }, (res) => {
-        swiperWidth = res.width;
+        res.width;
       }).exec();
       common_vendor.index.createSelectorQuery().in(vm.proxy).selectAll(".tab-bar-scroll-item").boundingClientRect((rects) => {
         rects.forEach((rect) => {
@@ -107,18 +108,13 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       if (prevIndex === _lastTabIndex || prevIndex < 0 || prevIndex > pageList.length - 1) {
         return;
       }
-      var percentage = Math.abs(swiperWidth / offsetX);
-      var currentSize = tabListSize[_lastTabIndex];
-      var prevSize = tabListSize[prevIndex];
-      var lineL = currentSize.left + (prevSize.left - currentSize.left) / percentage;
-      var lineW = currentSize.width + (prevSize.width - currentSize.width) / percentage;
-      updateIndicator(lineL, lineW);
     }
     function animationfinish(e) {
       let index = e.detail.current;
       if (_touchTabIndex === index) {
         isTap.value = false;
       }
+      console.log(index);
       _lastTabIndex = index;
       switchTab(index);
       updateIndicator(tabListSize[index].left, tabListSize[index].width);

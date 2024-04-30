@@ -23,6 +23,9 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+h2.data-v-db5b8b6c {
+  color: red;
+}
 .tab-bar.data-v-db5b8b6c {
   display: flex;
   align-items: center;
@@ -68,7 +71,7 @@
   width: 0;
   transform: translate(0, 0, 0);
   background-color: #333639;
-  height: 2rpx;
+  height: 2px;
 }
 .tab-bar-scroll .scroll-view-animation.data-v-db5b8b6c {
   transition-duration: 300ms;
