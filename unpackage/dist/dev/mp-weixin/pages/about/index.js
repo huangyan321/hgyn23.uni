@@ -22,5 +22,5 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
   }
 });
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-415a4f9d"], ["__file", "C:/Users/16045/Desktop/code/my-project/hgyn23.uni/pages/about/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-415a4f9d"], ["__file", "C:/Users/vanweiping/Desktop/code/myproject/hbuilderx/hgyn23.mp/pages/about/index.vue"]]);
 wx.createPage(MiniProgramPage);

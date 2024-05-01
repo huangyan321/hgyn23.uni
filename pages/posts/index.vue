@@ -2,8 +2,8 @@
 	<view class="content">
 		<NavBar></NavBar>
 		<view class="tab-bar">
-			<scroll-view class="tab-bar-scroll" :scroll="false" :scroll-x="true" :show-scrollbar="false"
-				scroll-with-animation :scroll-into-view="scrollInto">
+			<scroll-view class="tab-bar-scroll" :enable-flex="true" :scroll="false" :scroll-x="true"
+				:show-scrollbar="false" scroll-with-animation :scroll-into-view="scrollInto">
 				<view style="flex-direction: column;">
 					<view class="tab-bar-scroll-box">
 						<view class="tab-bar-scroll-item" v-for="(tab,index) in tabList" :key="tab.id"
@@ -14,19 +14,20 @@
 						</view>
 					</view>
 				</view>
-			</scroll-view>
-			<view class="scroll-view-indicator">
-				<view ref="underline" class="scroll-view-underline" :class="isTap ? 'scroll-view-animation':''"
-					:style="{transform: `translateX(${indicatorRect.left}px)`, width: indicatorRect.width + 'px'}">
+				<view class="scroll-view-indicator">
+					<view ref="underline" class="scroll-view-underline" :class="isTap ? 'scroll-view-animation':''"
+						:style="{transform: `translateX(${indicatorRect.left}px)`, width: indicatorRect.width + 'px'}">
+					</view>
 				</view>
-			</view>
+			</scroll-view>
+
 			<view class="tab-bar-line"></view>
 		</view>
 		<swiper class="page-box" ref="swiper1" :autoplay="false" :current="tabIndex" :duration="300"
 			@change="onswiperchange" @transition="onswiperscroll" @animationfinish="animationfinish"
 			@onAnimationEnd="animationfinish">
 			<swiper-item class="swiper-item" v-for="(tab, index) in tabList" :key="tab.id">
-				<PostPage class="page-item" :tab-id="tab.id" :ref="'page' + index" />
+				<PostPage class="page-item" :tab-id="tab.id !== - 1 ? tab.id : void 0 " :ref="'page' + index" />
 			</swiper-item>
 		</swiper>
 	</view>
@@ -34,10 +35,9 @@
 
 <script setup lang="ts">
 	import { onReady, onLoad } from '@dcloudio/uni-app'
-	import { getPosts } from '@/api';
 	import { getMock } from '@/utils/mock';
+	import { getCategoryList } from '@/api';
 	import PostPage from './page.vue'
-	import NavBar from './nav-bar.vue'
 	import { getCurrentInstance, reactive, ref, nextTick } from 'vue'
 	// 缓存页签数量
 	const MAX_CACHE_PAGE = 2;
@@ -68,8 +68,8 @@
 			title: '请稍后...',
 			mask: true
 		})
-		const res = await getMock('category')
-		tabList.value = res.data.records
+		const res = await getCategoryList({ page: 1, page_size: 999 })
+		tabList.value = insertHeadTab(res.data.records)
 		nextTick(() => {
 			uni.hideToast()
 			for (var i = 0; i < tabList.value.length; i++) {
@@ -84,7 +84,19 @@
 			selectorQuery();
 		})
 	})
-
+	function insertHeadTab(tabList) {
+		const header = {
+			created_at: "2024-01-12 17:46:12",
+			id: -1,
+			name: "全部",
+			parent_id: 1,
+			sort: 1,
+			status: 1,
+			updated_at: "2024-01-12 17:47:22",
+		}
+		tabList.unshift(header)
+		return tabList
+	}
 	function ontabtap(e : any) {
 		let index = e.target.dataset.current || e.currentTarget.dataset.current;
 		// #ifdef  H5 || MP-WEIXIN
@@ -96,7 +108,6 @@
 		switchTab(index);
 	}
 	function switchTab(index : number) {
-		console.log(pageList);
 		if (pageList[index].dataList.length === 0) {
 			loadTabData(index);
 		}

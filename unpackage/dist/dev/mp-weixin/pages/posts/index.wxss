@@ -23,9 +23,6 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-h2.data-v-db5b8b6c {
-  color: red;
-}
 .tab-bar.data-v-db5b8b6c {
   display: flex;
   align-items: center;
@@ -37,10 +34,8 @@ h2.data-v-db5b8b6c {
   color: #000000;
 }
 .tab-bar-scroll.data-v-db5b8b6c {
-  flex: 1;
   width: 100%;
   box-sizing: border-box;
-  padding: 0 30rpx;
 }
 .tab-bar-scroll-box.data-v-db5b8b6c {
   display: flex;
@@ -48,6 +43,7 @@ h2.data-v-db5b8b6c {
   justify-content: flex-start;
   flex-wrap: nowrap;
   flex-direction: row;
+  padding: 0 30rpx;
   height: 90rpx;
 }
 .tab-bar-scroll-item.data-v-db5b8b6c {
@@ -63,18 +59,18 @@ h2.data-v-db5b8b6c {
 .tab-bar-scroll-item-title--active.data-v-db5b8b6c {
   color: #333639;
 }
-.tab-bar .scroll-view-indicator.data-v-db5b8b6c {
+.tab-bar-scroll .scroll-view-indicator.data-v-db5b8b6c {
   width: 100%;
   height: 2px;
   background-color: transparent;
 }
-.tab-bar .scroll-view-underline.data-v-db5b8b6c {
+.tab-bar-scroll .scroll-view-underline.data-v-db5b8b6c {
   width: 0;
   transform: translate(0, 0, 0);
   background-color: #333639;
   height: 2px;
 }
-.tab-bar .scroll-view-animation.data-v-db5b8b6c {
+.tab-bar-scroll .scroll-view-animation.data-v-db5b8b6c {
   transition-duration: 300ms;
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   transition-property: trasform;

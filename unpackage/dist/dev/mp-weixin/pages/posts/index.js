@@ -1,14 +1,30 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-const utils_mock_index = require("../../utils/mock/index.js");
-require("../../utils/mock/archives.js");
-require("../../utils/mock/postlist.js");
-require("../../utils/mock/category.js");
+const api_index = require("../../api/index.js");
+require("../../utils/request/index.js");
+require("../../utils/request/config.js");
+require("../../js_sdk/luch-request/luch-request/core/Request.js");
+require("../../js_sdk/luch-request/luch-request/core/dispatchRequest.js");
+require("../../js_sdk/luch-request/luch-request/adapters/index.js");
+require("../../js_sdk/luch-request/luch-request/helpers/buildURL.js");
+require("../../js_sdk/luch-request/luch-request/utils.js");
+require("../../js_sdk/luch-request/luch-request/core/buildFullPath.js");
+require("../../js_sdk/luch-request/luch-request/helpers/isAbsoluteURL.js");
+require("../../js_sdk/luch-request/luch-request/helpers/combineURLs.js");
+require("../../js_sdk/luch-request/luch-request/core/settle.js");
+require("../../js_sdk/luch-request/luch-request/core/InterceptorManager.js");
+require("../../js_sdk/luch-request/luch-request/core/mergeConfig.js");
+require("../../js_sdk/luch-request/luch-request/core/defaults.js");
+require("../../js_sdk/luch-request/luch-request/utils/clone.js");
+if (!Array) {
+  const _easycom_NavBar2 = common_vendor.resolveComponent("NavBar");
+  _easycom_NavBar2();
+}
+const _easycom_NavBar = () => "../../components/NavBar/NavBar.js";
 if (!Math) {
-  (NavBar + PostPage)();
+  (_easycom_NavBar + PostPage)();
 }
 const PostPage = () => "./page.js";
-const NavBar = () => "./nav-bar.js";
 const MAX_CACHE_PAGE = 2;
 const MAX_CACHE_DATA = 5;
 const TAB_PRELOAD_OFFSET = 1;
@@ -37,8 +53,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         title: "请稍后...",
         mask: true
       });
-      const res = await utils_mock_index.getMock("category");
-      tabList.value = res.data.records;
+      const res = await api_index.getCategoryList({ page: 1, page_size: 999 });
+      tabList.value = insertHeadTab(res.data.records);
       common_vendor.nextTick$1(() => {
         common_vendor.index.hideToast();
         for (var i = 0; i < tabList.value.length; i++) {
@@ -53,6 +69,19 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         selectorQuery();
       });
     });
+    function insertHeadTab(tabList2) {
+      const header = {
+        created_at: "2024-01-12 17:46:12",
+        id: -1,
+        name: "全部",
+        parent_id: 1,
+        sort: 1,
+        status: 1,
+        updated_at: "2024-01-12 17:47:22"
+      };
+      tabList2.unshift(header);
+      return tabList2;
+    }
     function ontabtap(e) {
       let index = e.target.dataset.current || e.currentTarget.dataset.current;
       isTap.value = true;
@@ -62,7 +91,6 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       switchTab(index);
     }
     function switchTab(index) {
-      console.log(pageList);
       if (pageList[index].dataList.length === 0) {
         loadTabData(index);
       }
@@ -154,10 +182,10 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             h: common_vendor.o(ontabtap, tab.id)
           };
         }),
-        b: scrollInto.value,
-        c: common_vendor.n(isTap.value ? "scroll-view-animation" : ""),
-        d: `translateX(${indicatorRect.left}px)`,
-        e: indicatorRect.width + "px",
+        b: common_vendor.n(isTap.value ? "scroll-view-animation" : ""),
+        c: `translateX(${indicatorRect.left}px)`,
+        d: indicatorRect.width + "px",
+        e: scrollInto.value,
         f: common_vendor.f(tabList.value, (tab, index, i0) => {
           return {
             a: common_vendor.sr("page" + index, "db5b8b6c-1-" + i0, {
@@ -166,7 +194,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             b: "page" + index,
             c: "db5b8b6c-1-" + i0,
             d: common_vendor.p({
-              ["tab-id"]: tab.id
+              ["tab-id"]: tab.id !== -1 ? tab.id : void 0
             }),
             e: tab.id
           };
@@ -180,5 +208,5 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
   }
 });
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-db5b8b6c"], ["__file", "C:/Users/16045/Desktop/code/my-project/hgyn23.uni/pages/posts/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-db5b8b6c"], ["__file", "C:/Users/vanweiping/Desktop/code/myproject/hbuilderx/hgyn23.mp/pages/posts/index.vue"]]);
 wx.createPage(MiniProgramPage);

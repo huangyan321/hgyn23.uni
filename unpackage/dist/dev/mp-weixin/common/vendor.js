@@ -6880,6 +6880,13 @@ const createSubpackageApp = initCreateSubpackageApp();
   wx.createPluginApp = global.createPluginApp = createPluginApp;
   wx.createSubpackageApp = global.createSubpackageApp = createSubpackageApp;
 }
+const createHook = (lifecycle) => (hook, target = getCurrentInstance()) => {
+  !isInSSRComponentSetup && injectHook(lifecycle, hook, target);
+};
+const onShow = /* @__PURE__ */ createHook(ON_SHOW);
+const onHide = /* @__PURE__ */ createHook(ON_HIDE);
+const onLoad = /* @__PURE__ */ createHook(ON_LOAD);
+const onReady = /* @__PURE__ */ createHook(ON_READY);
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 function getDefaultExportFromCjs(x) {
   return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
@@ -7360,13 +7367,6 @@ var localizedFormat = { exports: {} };
 })(localizedFormat);
 var localizedFormatExports = localizedFormat.exports;
 const LocalizedFormat = /* @__PURE__ */ getDefaultExportFromCjs(localizedFormatExports);
-const createHook = (lifecycle) => (hook, target = getCurrentInstance()) => {
-  !isInSSRComponentSetup && injectHook(lifecycle, hook, target);
-};
-const onShow = /* @__PURE__ */ createHook(ON_SHOW);
-const onHide = /* @__PURE__ */ createHook(ON_HIDE);
-const onLoad = /* @__PURE__ */ createHook(ON_LOAD);
-const onReady = /* @__PURE__ */ createHook(ON_READY);
 exports.LocalizedFormat = LocalizedFormat;
 exports._export_sfc = _export_sfc;
 exports.createSSRApp = createSSRApp;

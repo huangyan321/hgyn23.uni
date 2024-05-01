@@ -23,9 +23,6 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-h2.data-v-158e3f34 {
-  color: red;
-}
 .list-scroll.data-v-158e3f34 {
   box-sizing: border-box;
   flex: 1;

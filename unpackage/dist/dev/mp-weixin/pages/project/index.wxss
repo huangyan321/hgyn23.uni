@@ -23,9 +23,6 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-h2.data-v-47879d53 {
-  color: red;
-}
 .project .no-data.data-v-47879d53 {
   opacity: 0.5;
   padding: 8rpx 0;

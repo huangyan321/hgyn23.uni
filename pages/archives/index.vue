@@ -16,7 +16,7 @@
 	};
 	function goDetail(detail : any) {
 		uni.navigateTo({
-			url: '../posts/detail/index?query=' + encodeURIComponent(JSON.stringify(detail))
+			url: '/pages/post-detail/index?query=' + encodeURIComponent(JSON.stringify(detail))
 		});
 	}
 	function getGroupName(p : Post) {
@@ -74,6 +74,7 @@
 	.archives {
 		position: relative;
 		color: #000;
+
 		.no-data {
 			opacity: 0.5;
 			padding: 8rpx 0;

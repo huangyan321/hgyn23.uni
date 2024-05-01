@@ -1,11 +1,11 @@
 {
   "pages": [
-    "pages/archives/index",
     "pages/posts/index",
-    "pages/posts/detail/index",
+    "pages/search/index",
+    "pages/archives/index",
+    "pages/post-detail/index",
     "pages/project/index",
-    "pages/about/index",
-    "pages/search/index"
+    "pages/about/index"
   ],
   "window": {
     "navigationBarTextStyle": "black",

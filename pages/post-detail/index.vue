@@ -6,39 +6,36 @@
 
 <script setup lang="ts">
 	import { onLoad } from '@dcloudio/uni-app'
-	import { ref, nextTick } from 'vue';
-	import { getPost } from '@/api';
-	import marked from '@/utils/marked'
+	import { ref, } from 'vue';
+	import { getPostDetail } from '@/api';
 	interface IProps {
 	}
 	defineProps<IProps>()
 
 	const banner = ref<any>()
 	const dataDetail = ref()
-	function load(queryStr : string) {
+	async function load(queryStr : string) {
 		var p = decodeURIComponent(queryStr);
 		try {
 			banner.value = JSON.parse(p);
 		} catch (error) {
 			banner.value = JSON.parse(p);
 		}
-		uni.setNavigationBarTitle({
-			title: banner.value.title
-		});
-
-		getDetail();
-	}
-	async function getDetail() {
 		uni.showToast({
 			icon: 'loading',
 			title: '获取中...',
 			mask: true
 		})
-		const res = await getPost(banner.value.id)
+		await uni.setNavigationBarTitle({
+			title: banner.value.title
+		});
+
+		await getDetail();
+		uni.hideToast()
+	}
+	async function getDetail() {
+		const res = await getPostDetail(banner.value.id)
 		dataDetail.value = res.data.content
-		nextTick(() => {
-			uni.hideToast()
-		})
 	}
 	onLoad((event) => {
 		// 目前在某些平台参数会被主动 decode，暂时这样处理。

@@ -18,7 +18,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
     function goDetail(detail) {
       common_vendor.index.navigateTo({
-        url: "../posts/detail/index?query=" + encodeURIComponent(JSON.stringify(detail))
+        url: "/pages/post-detail/index?query=" + encodeURIComponent(JSON.stringify(detail))
       });
     }
     function getGroupName(p) {
@@ -66,5 +66,5 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
   }
 });
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-158e3f34"], ["__file", "C:/Users/16045/Desktop/code/my-project/hgyn23.uni/pages/archives/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-158e3f34"], ["__file", "C:/Users/vanweiping/Desktop/code/myproject/hbuilderx/hgyn23.mp/pages/archives/index.vue"]]);
 wx.createPage(MiniProgramPage);

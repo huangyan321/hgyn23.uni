@@ -1,14 +1,22 @@
 import request from '@/utils/request'
 
-export function getPosts() {
-	return request.get('/tag/list', {
+export function getCategoryList(params : { page : number; page_size : number }) {
+	return request.get('/user/category', {
 		params: {
-			page: 1,
-			page_size: 6
-		}
+			...params,
+			flat: 1
+		},
 	})
 }
 
-export function getPost(id : number) {
+
+export function getPostList(params : { page : number; page_size : number; category_id ?: number }, delay ?: number) {
+	return request.get('/user/article', {
+		params,
+		delay: 500
+	})
+}
+
+export function getPostDetail(id : number) {
 	return request.get(`/user/article/${id}`)
 }

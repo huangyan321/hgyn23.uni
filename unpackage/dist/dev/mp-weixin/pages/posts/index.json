@@ -2,7 +2,7 @@
   "navigationBarTitleText": "文章",
   "navigationStyle": "custom",
   "usingComponents": {
-    "post-page": "./page",
-    "nav-bar": "./nav-bar"
+    "nav-bar": "../../components/NavBar/NavBar",
+    "post-page": "./page"
   }
 }

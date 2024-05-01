@@ -23,9 +23,6 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-h2.data-v-415a4f9d {
-  color: red;
-}
 .about.data-v-415a4f9d {
   padding: 30rpx;
 }
