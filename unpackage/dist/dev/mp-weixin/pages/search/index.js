@@ -1,6 +1,7 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 const api_index = require("../../api/index.js");
+const store_public = require("../../store/public.js");
 require("../../utils/request/index.js");
 require("../../utils/request/config.js");
 require("../../js_sdk/luch-request/luch-request/core/Request.js");
@@ -31,6 +32,7 @@ if (!Math) {
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "index",
   setup(__props) {
+    const publicStore = store_public.usePublicStore();
     const dataList = common_vendor.ref([]);
     const requestParams = common_vendor.reactive({
       page: 1,
@@ -49,6 +51,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       dataList.value = [];
       isLoading.value = true;
       isSearchingMode.value = true;
+      publicStore.setSearchHistory(requestParams.title);
       const res = await api_index.getPostList(requestParams);
       const records = res.data.records;
       if (records.length) {
@@ -66,6 +69,19 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         url: "/pages/post-detail/index?query=" + encodeURIComponent(JSON.stringify({ title: detail.title, id: detail.id }))
       });
     }
+    function historyClickHandler(record) {
+      requestParams.title = record;
+      search();
+    }
+    function cleanHistory() {
+      common_vendor.index.showModal({
+        title: "删除全部搜索历史？",
+        confirmText: "全部删除",
+        cancelText: "取消"
+      }).then(() => {
+        publicStore.cleanSearchHistory();
+      });
+    }
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: common_vendor.o(search),
@@ -75,17 +91,21 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           searchText: requestParams.title
         }),
         d: !isSearchingMode.value
-      }, !isSearchingMode.value ? {
-        e: common_vendor.f(10, (item, k0, i0) => {
+      }, !isSearchingMode.value ? common_vendor.e({
+        e: common_vendor.o(cleanHistory),
+        f: common_vendor.unref(publicStore).searchHistoryGetter.length
+      }, common_vendor.unref(publicStore).searchHistoryGetter.length ? {
+        g: common_vendor.f(common_vendor.unref(publicStore).searchHistoryGetter, (record, k0, i0) => {
           return {
-            a: item,
-            b: common_vendor.o(($event) => requestParams.title = item, item)
+            a: common_vendor.t(record),
+            b: record,
+            c: common_vendor.o(($event) => historyClickHandler(record), record)
           };
         })
-      } : common_vendor.e({
-        f: dataList.value.length && !isLoading.value
+      } : {}) : common_vendor.e({
+        h: dataList.value.length && !isLoading.value
       }, dataList.value.length && !isLoading.value ? {
-        g: common_vendor.f(dataList.value, (item, k0, i0) => {
+        i: common_vendor.f(dataList.value, (item, k0, i0) => {
           return {
             a: item.id,
             b: common_vendor.o(($event) => goDetail(item), item.id),
@@ -96,12 +116,12 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           };
         })
       } : isLoading.value ? {
-        i: common_vendor.p({
+        k: common_vendor.p({
           ["content-text"]: loadMoreContext,
           status: loadMoreStatus.value
         })
       } : {}, {
-        h: isLoading.value
+        j: isLoading.value
       }));
     };
   }

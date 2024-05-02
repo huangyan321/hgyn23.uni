@@ -59,6 +59,7 @@
 		if (value.length > 0) {
 			showClearIcon.value = true
 		} else {
+			emit('confirm')
 			showClearIcon.value = false
 		}
 	}

@@ -9,18 +9,17 @@ if (!Math) {
   "./pages/project/index.js";
   "./pages/about/index.js";
 }
-const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
-  __name: "App",
-  setup(__props) {
-    return () => {
-    };
-  }
-});
-const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "C:/Users/vanweiping/Desktop/code/myproject/hbuilderx/hgyn23.mp/App.vue"]]);
+const _sfc_main = {};
+function _sfc_render(_ctx, _cache) {
+  return {};
+}
+const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/vanweiping/Desktop/code/myproject/hbuilderx/hgyn23.mp/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
+  app.use(common_vendor.createPinia());
   return {
-    app
+    app,
+    Pinia: common_vendor.Pinia
   };
 }
 createApp().app.mount("#app");

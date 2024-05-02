@@ -34,11 +34,12 @@
 </template>
 
 <script setup lang="ts">
-	import { onReady, onLoad } from '@dcloudio/uni-app'
-	import { getMock } from '@/utils/mock';
+	import { onReady, } from '@dcloudio/uni-app'
 	import { getCategoryList } from '@/api';
 	import PostPage from './page.vue'
-	import { getCurrentInstance, reactive, ref, nextTick } from 'vue'
+	import { getCurrentInstance, reactive, ref, nextTick, } from 'vue'
+
+
 	// 缓存页签数量
 	const MAX_CACHE_PAGE = 2;
 	const MAX_CACHE_DATA = 5;

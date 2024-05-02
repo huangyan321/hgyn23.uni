@@ -7,12 +7,13 @@
 				<!-- 头部 -->
 				<view class="search-header">
 					<text class="history-text">搜索历史</text>
-					<text class="history-clean">清空</text>
+					<text class="history-clean" @click="cleanHistory">清空</text>
 				</view>
 				<!-- 内容部分 -->
-				<view v-if="true" class="search-content">
-					<view class="search-item" v-for="item in 10" :key="item" @click="requestParams.title = item">
-						前端开发
+				<view v-if="publicStore.searchHistoryGetter.length" class="search-content">
+					<view class="search-item" v-for="record in publicStore.searchHistoryGetter" :key="record"
+						@click="historyClickHandler(record)">
+						{{record}}
 					</view>
 				</view>
 				<!-- 没有内容 -->
@@ -39,11 +40,12 @@
 </template>
 
 <script lang="ts" setup>
-	import { getPostList } from '../../api'
+	import { getPostList } from '@/api'
 	import { reactive, ref, watch } from 'vue'
 	import { onLoad } from '@dcloudio/uni-app'
+	import { usePublicStore } from '@/store/public';
+	const publicStore = usePublicStore()
 	const dataList = ref<any[]>([])
-
 	const requestParams = reactive({
 		page: 1,
 		page_size: 999,
@@ -61,6 +63,7 @@
 		dataList.value = []
 		isLoading.value = true
 		isSearchingMode.value = true
+		publicStore.setSearchHistory(requestParams.title)
 		const res = await getPostList(requestParams, 500)
 		const records = res.data.records as any[]
 		if (records.length) {
@@ -80,6 +83,19 @@
 		uni.navigateTo({
 			url: '/pages/post-detail/index?query=' + encodeURIComponent(JSON.stringify({ title: detail.title, id: detail.id }))
 		});
+	}
+	function historyClickHandler(record : string) {
+		requestParams.title = record
+		search()
+	}
+	function cleanHistory() {
+		uni.showModal({
+			title: '删除全部搜索历史？',
+			confirmText: '全部删除',
+			cancelText: '取消'
+		}).then(() => {
+			publicStore.cleanSearchHistory()
+		})
 	}
 </script>
 <style scoped lang="scss">
